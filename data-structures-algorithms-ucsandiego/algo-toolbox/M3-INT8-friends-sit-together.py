@@ -74,7 +74,6 @@ def minimum_moves(seating_positions):
     people_between = []
     for index, people in enumerate(seating_positions):
         people_between.append(abs(median_index - index) - 1)
-    print(people_between)
 
     # Calculate minimum seating positions
     moves = 0

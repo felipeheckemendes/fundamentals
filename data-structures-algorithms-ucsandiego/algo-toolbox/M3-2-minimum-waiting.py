@@ -1,4 +1,6 @@
-# 
+# Several patients arrive at a doctor at the same time.
+# Each has his treatment time know beforehand.
+# Determine the order in which to accept the patients so that total waiting time aggregate between all patients is the least.
 
 # My own proposition
 def minimum_time(waiting_times):
@@ -17,6 +19,3 @@ def minimum_time(waiting_times):
     return total
 
 print(minimum_time([10, 15, 20]))
-
-# Class implementation
-def waiting_time(waiting)

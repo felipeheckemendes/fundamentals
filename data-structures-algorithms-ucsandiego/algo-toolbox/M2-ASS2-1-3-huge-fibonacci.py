@@ -3,7 +3,6 @@
 import time
 
 def fibo_modulo(n, m):
-
     if n <= 1:
         return n
     n_minus_2, n_minus_1 = 0, 1
@@ -14,10 +13,7 @@ def fibo_modulo(n, m):
         n_minus_1 = fibo_modulo
     return fibo_modulo
 
-
 n, m = map(int, input().split())
-# n = int(input())
-
 # start_time = time.time()
 print(fibo_modulo(n, m))
 # end_time = time.time()

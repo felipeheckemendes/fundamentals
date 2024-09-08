@@ -16,17 +16,22 @@ def max_loot(max_weight, loot_items):
             item_to_take[0] -= item_to_take[0]/item_to_take[1]*remaining
             item_to_take[1] -= remaining
             remaining = 0
-        print(looted_value, remaining, loot_items)
     return looted_value
 
 def best_item(loot_items):
     best_index = 0
     best_value = 0
     for index, item in enumerate(loot_items):
-        print(index, item)
         if item[1] > 0 and item[0]/item[1] > best_value:
             best_index = index
             best_value = item[0]/item[1]
     return best_index
 
-print(max_loot(5, [[500, 10],[20, 4],[40, 10]]))
+no_items, capacity = input().split()
+no_items = int(no_items)
+capacity = int(capacity)
+products = []
+for i in range(no_items):
+    products.append(list(map(int, input().split())))
+
+print(max_loot(capacity, products))

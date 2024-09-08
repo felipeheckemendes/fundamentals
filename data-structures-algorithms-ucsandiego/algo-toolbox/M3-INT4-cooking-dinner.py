@@ -30,11 +30,9 @@ def cooking_order(dishes):
         for dish in dishes:
             sum_preparing_times = sum_preparing_times + dish[0]
 
-        print("preparing time", sum_preparing_times)
         # Find a greedy object
         for index, dish in enumerate(dishes):
             if dish[0]+dish[1] > sum_preparing_times:
-                print("Chosen dish total time", dish[0]+dish[1], dish[0], dish[1])
                 candidate = index
         
         # If no solution is found, return that there is no solution
@@ -44,7 +42,6 @@ def cooking_order(dishes):
         # Remove this from initial problem to reduce the problem
         # And add it to solution
         serving_order.append(dishes[candidate])
-        print("Serving order ", serving_order, "\n")
         dishes.pop(candidate)
 
 

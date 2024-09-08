@@ -22,7 +22,6 @@ def minimum_unchangeable(coins):
     
     coins.sort()
     for index, coin in enumerate(coins):
-        print("Adding coin:", coin)
         changeable.append(coin)
         temp = []
         for index, value in enumerate(changeable[:-1]):
@@ -30,7 +29,6 @@ def minimum_unchangeable(coins):
         for item in temp:
             if item not in changeable:
                 changeable += [item]
-        print(temp, changeable)
         for i in range(1, max(changeable)):
             if i not in changeable:
                 return i

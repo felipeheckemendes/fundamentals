@@ -30,7 +30,8 @@ def maximum_summands(n):
     return summands
         
 
-result = maximum_summands(2)
+n = int(input())
+result = maximum_summands(n)
 print(len(result))
 print(" ".join(map(str, result)))
 

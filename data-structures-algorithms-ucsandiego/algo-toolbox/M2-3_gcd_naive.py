@@ -13,7 +13,9 @@ def gcd_naive(a, b):
             gcd = d
     return gcd
 
-print(gcd_naive(55459440, 211447980))
+a, b = input().split()
+a, b = [int(a), int(b)]
+print(gcd_naive(a, b))
 
 # Not possible to compute:
 # print(gcd_naive(49535164894516487561, 15468765431269784650))

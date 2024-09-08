@@ -12,32 +12,34 @@ Output: The length of an optimal switch-series, i.e., the minimum number of swit
 """
 SOLUTION
 
-[1, 0, 0, 1, 0, 1]
+    EXAMPLES
 
-Switch the first 0
-[1, 1, 1, 0, 1, 0]
-[1, 1, 1, 1, 0, 1]
-[1, 1, 1, 1, 1, 0]
-[1, 1, 1, 1, 1, 1]
+    [1, 0, 0, 1, 0, 1]
 
-Switch the last 0
-[1, 0, 0, 1, 1, 0]
-[1, 0, 0, 1, 1, 1]
-[1, 1, 1, 0, 0, 0]
-[1, 1, 1, 1, 1, 1]
+    Switch the first 0
+    [1, 1, 1, 0, 1, 0]
+    [1, 1, 1, 1, 0, 1]
+    [1, 1, 1, 1, 1, 0]
+    [1, 1, 1, 1, 1, 1]
 
-Both switch the first and last result in the same result. However, switching first is easier to implement.
-furthermore, we do not need to switch the array every time to get the minimum. All we need to do is count how many times the number changes, basically.
+    Switch the last 0
+    [1, 0, 0, 1, 1, 0]
+    [1, 0, 0, 1, 1, 1]
+    [1, 1, 1, 0, 0, 0]
+    [1, 1, 1, 1, 1, 1]
 
-Switch the middle
-[1, 0, 1, 0, 1, 0]
-[1, 0, 1, 1, 0, 1]
-[1, 1, 0, 0, 1, 0]
-[1, 1, 0, 1, 0, 1]
-[1, 1, 1, 0, 1, 0]
-[1, 1, 1, 1, 0, 1]
-[1, 1, 1, 1, 1, 0]
-[1, 1, 1, 1, 1, 1]
+    Both switch the first and last result in the same result. However, switching first is easier to implement.
+    furthermore, we do not need to switch the array every time to get the minimum. All we need to do is count how many times the number changes, basically.
+
+    Switch the middle
+    [1, 0, 1, 0, 1, 0]
+    [1, 0, 1, 1, 0, 1]
+    [1, 1, 0, 0, 1, 0]
+    [1, 1, 0, 1, 0, 1]
+    [1, 1, 1, 0, 1, 0]
+    [1, 1, 1, 1, 0, 1]
+    [1, 1, 1, 1, 1, 0]
+    [1, 1, 1, 1, 1, 1]
 """
 
 def minimum_switches(bulbs):

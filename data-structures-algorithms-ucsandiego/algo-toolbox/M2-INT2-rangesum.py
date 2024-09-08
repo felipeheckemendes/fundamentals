@@ -2,11 +2,12 @@
 
 def rangecompute(array, start, end):
     sum = 0
-    for i in range(start, end):
+    for i in range(start, end+1):
         sum = sum + array[i]
     return sum
 
-arr = [1,2,3,4,5]
-print(
-    rangecompute(arr, 1, 1)
-)
+arr = input().split()
+arr = [int(element) for element in arr]
+print(arr)
+start, end = map(int, input().split())
+print(rangecompute(arr, start, end))

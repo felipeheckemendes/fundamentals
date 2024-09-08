@@ -13,8 +13,6 @@ that time.
 """
 
 def visits(ranges):
-    # Do a greedy approach.
-
     # Initialization of starts and ends lists
     starts = [range[0] for range in ranges]
     ends = [range[1] for range in ranges]
@@ -22,12 +20,12 @@ def visits(ranges):
     intersecting_indexes = []
     chosen_points = []
 
+    # Do a greedy approach.
     # Check all lines intersecting. 
     while len(ranges) > 0:
-
         # Set first point to be the leftmost point with a line
         current_point = min(starts)
-    # Advance and intersect new lines, but if any of the intesecting lines reaches its end, stop.
+        # Advance and intersect new lines, but if any of the intesecting lines reaches its end, stop.
         # Check if there any other intersections currently
         for index, element in enumerate(ranges):
             if element[0] <= current_point <= element[1]:
@@ -70,4 +68,9 @@ def visits(ranges):
     
     return [visits, chosen_points]
 
-print(visits([[1, 3], [2, 5], [3, 6]]))
+n = int(input())
+ranges = [[int(element) for element in input().split()[:2]] for _ in range(n)]
+result = visits(ranges)
+print(result[0])
+points = ''
+print(" ".join(map(str, result[1])))

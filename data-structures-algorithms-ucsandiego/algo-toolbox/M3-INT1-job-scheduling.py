@@ -58,7 +58,7 @@ def selection_sort(jobs):
 
 
 
-jobs = [[500, 2], [400, 2], [10, 2], [5, 2]]
 # First number -> Profit
 # Second number -> deadline
+jobs = [[500, 2], [400, 2], [10, 2], [5, 2]]
 print(job_scheduling(jobs))

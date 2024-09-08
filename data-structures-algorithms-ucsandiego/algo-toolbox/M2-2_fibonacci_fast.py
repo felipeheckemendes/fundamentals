@@ -1,4 +1,7 @@
 def fibonacci1(n):
+    """
+    This implementation has fast time complexity, however its space complexity can be improved, since it stores all numbers up to the required.
+    """
     series = []
     if n >= 0:
         series.append(0)
@@ -9,8 +12,11 @@ def fibonacci1(n):
             series.append(series[i-1]+series[i-2])
     return series[n]
 
-
 def fibonacci2(n):
+    """
+    This implementation does not have space complexity, since it stores only the last 2 numbes on the sequence.
+    However, it could be potentially be improved to be more succint.
+    """
     fibonacci = 0
     for i in range(n+1):
         if i == 0:
@@ -25,15 +31,6 @@ def fibonacci2(n):
             n_minus_1 = fibonacci
     return fibonacci
 
-# print(fibonacci2(0) == fibonacci1(0), fibonacci2(0), fibonacci1(0))
-# print(fibonacci2(1) == fibonacci1(1), fibonacci2(1), fibonacci1(1))
-# print(fibonacci2(2) == fibonacci1(2), fibonacci2(2), fibonacci1(2))
-# print(fibonacci2(3) == fibonacci1(3), fibonacci2(3), fibonacci1(3))
-# print(fibonacci2(4) == fibonacci1(4), fibonacci2(4), fibonacci1(4))
-# print(fibonacci2(5) == fibonacci1(5), fibonacci2(5), fibonacci1(5))
-# print(fibonacci2(6) == fibonacci1(6), fibonacci2(6), fibonacci1(6))
-# print(fibonacci2(7) == fibonacci1(7), fibonacci2(7), fibonacci1(7))
-# print(fibonacci2(15) == fibonacci1(15), fibonacci2(15), fibonacci1(15))
-
-print(fibonacci2(4))
+n = int(input())
+print(fibonacci2(n))
 

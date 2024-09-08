@@ -5,47 +5,50 @@ Input: A sequence of positive integers.
 Output: The largest integer that can be obtained by concatenating the given integers in some order.
 """
 
-def select_best_first(n, list):
-    largest_digit = '0'
-    selection = []
-
-    if len(list) <= 1:
-        return list[0]
-
-    # Get all elements starting with the largest digit
-    for element in list:
-        # print(type(largest_digit), largest_digit)
-        # print(type(element[1][0]), element[1][0], element[1], element)
-        if element[1][0] == largest_digit:
-            selection.append(element)
-        elif element[1][0] > largest_digit:
-            largest_digit = element[1][0]
-            selection = []
-            selection.append(element)
-    # Remove the first digit (if only 1 digit, next digit = first) and select all elements with the highest first digit.
-    for element in selection:
-        if len(element[1]) == 1:
-            pass
+def better_than2(n1, n2):
+    for i in range(min(len(n1), len(n2))):
+        if n1[i] > n2[i]:
+            return True
+        elif n1[i] < n2[i]:
+            return False
         else:
-            # print("==", element[1][1:] )
-            element[1] = element[1][1:]
-    return select_best_first(len(selection), selection)
+            pass
+    print("N1, N2:", n1, n2, len(n1), len(n2))
+    if n1 == '891': print("Aqui:", n1[len(n2)], n2[-1])
+    if len(n1) < len(n2):
+        if n2[len(n1)] > n1[-1]:
+            return False
+        if n2[len(n1)] < n1[-1]:
+            return True
+    elif len(n1) > len(n2):
+        if n1[len(n2)] > n2[-1]:
+            return True
+        if n1[len(n2)] < n2[-1]:
+            return False
+    elif len(n1) == len(n2):
+        return True
+
+def better_than(n1, n2):
+    if int(n1+n2) >= int(n2+n1):
+        return True
+    else:
+        return False
 
 def largest_concatenate(n, list):
     if len(list) <= 1:
-        print("YAYYYYY")
-        return [list[0][0]]
+        return list
 
-    selected = select_best_first(n, list)
-    list.remove(selected)
-    return [selected[0]] + largest_concatenate(len(list), list)
+    pivot = list[0]
+    better_than_pivot = []
+    worse_than_pivot = []
+    for index, element in enumerate(list[1:]):
+        if better_than(element, pivot):
+            better_than_pivot.append(element)
+        else:
+            worse_than_pivot.append(element)
+    return largest_concatenate(len(better_than_pivot), better_than_pivot) + [pivot] + largest_concatenate(len(worse_than_pivot), worse_than_pivot)
 
-
-    # Repeat until only 1 element left to choose, or elements are equal. Choose element, remove from list, and start again.
-        
-        
-
-mylist = [[index, element] for index, element in enumerate(mylist)]
-mylist = ['77', '96', '944', '9', '89']
-print(mylist)
-print(largest_concatenate(len(mylist), mylist))
+n = int(input())
+salaries = [element for element in input().split()]
+print(''.join(largest_concatenate(n, salaries)))
+# print(largest_concatenate(5, ['8', '86', '891', '866', '89']))

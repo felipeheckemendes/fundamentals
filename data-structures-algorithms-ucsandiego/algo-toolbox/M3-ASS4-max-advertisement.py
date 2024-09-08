@@ -5,7 +5,7 @@ of numbers
 """
 
 # The greedy approach easily provable is that the maximum sum of products combines the largest items of one list with the largest of the other list.
-# Assuming both lists are the same length, we can just sort them and then multiply.
+# Assuming both lists are the same length, we can just sort them and then multiply elements at same indexes.
 
 def max_revenue(clicks, prices):
     clicks.sort()
