@@ -8,7 +8,7 @@ def quick_sort3p_1st(arr, lower, upper):
     # global no_calls1
     # no_calls1 += 1
     if lower>=upper:
-        return
+        return arr
 
     m1, i, m2 = lower+1, lower+1, upper
     while i <= m2:
@@ -36,7 +36,7 @@ def quick_sort3p_2nd(arr, lower, upper):
     # global no_calls2
     # no_calls2 += 1
     if lower>=upper:
-        return
+        return arr
 
     m1, i, m2 = lower, lower+1, upper
     while i <= m2:
@@ -60,7 +60,7 @@ def quick_sort3p_random(arr, lower, upper):
     # global no_calls2
     # no_calls2 += 1
     if lower>=upper:
-        return
+        return arr
 
     pivot_index = random.randint(lower, upper)
     arr[lower], arr[pivot_index] = arr[pivot_index], arr[lower]
