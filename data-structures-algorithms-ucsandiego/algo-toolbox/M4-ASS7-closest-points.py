@@ -123,4 +123,4 @@ for i in range(n):
     points.append([int(element) for element in input().split()])
 points_y = [element for element in points_x]
 quick_sort_x(points_x, 0, len(points)-1, points_y)
-print(closest_points(points, 0, 11))
+print(closest_points(points, 0, n))
