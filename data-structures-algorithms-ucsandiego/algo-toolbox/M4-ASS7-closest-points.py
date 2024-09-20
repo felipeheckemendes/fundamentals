@@ -80,7 +80,7 @@ def binary_search_upperx(points, value):
             upper = mid-1
     return upper
 
-def closest_points(points, lower, upper):
+def closest_points(points, lower, upper, points_y):
     if upper - lower == 1:
         return math.sqrt( (points[upper][0]-points[lower][0])**2 + (points[upper][1]-points[lower][1])**2 )
     if upper - lower <= 0:
@@ -89,14 +89,15 @@ def closest_points(points, lower, upper):
 
     # Recursively call the function on the left and right regions
     partition_line = points[(upper-lower)//2][0] # = 5 - 2 // 2 = 3//2 = 1
-    d1 = closest_points(points, lower, lower+(upper-lower)//2) # = 2, 3
-    d2 = closest_points(points, lower+(upper-lower)//2+1, upper) # = 2, 5
+    d1 = closest_points(points, lower, lower+(upper-lower)//2, points_y) # = 2, 3
+    d2 = closest_points(points, lower+(upper-lower)//2+1, upper, points_y) # = 2, 5
 
     # Set d as the minimum of d1 and d2
     d = min(d1, d2)
 
     # Find the strip of points less than d distance from partition line
-    strip = points[binary_search_lowerx(points, partition_line - d) : binary_search_upperx(points, partition_line + d)]
+    # strip = points[binary_search_lowerx(points, partition_line - d) : binary_search_upperx(points, partition_line + d)]
+    strip = [element for element in points_y if (partition_line - d) <= element[1] <= (partition_line + d) ]
 
     # Check whether any two points on the strip between line - d and line + d have distance smaller than d. Set d as minimum of d' and d
     if len(strip) >= 2:
@@ -109,14 +110,17 @@ def closest_points(points, lower, upper):
     return d
 
 # Below is hardcoded input for testing:
-# points = [[4, 4], [-2, -2], [-3, -4], [-1, 3], [2, 3], [-4, 0], [1, 1], [-1, -1], [3, -1], [-4, 2], [-2, 4]]
-# quick_sort_x(points, 0, len(points)-1)
-# print(closest_points(points, 0, 11))
+# points_x = [[4, 4], [-2, -2], [-3, -4], [-1, 3], [2, 3], [-4, 0], [1, 1], [-1, -1], [3, -1], [-4, 2], [-2, 4]]
+# points_y = [element for element in points_x]
+# quick_sort_x(points_x, 0, len(points_x)-1)
+# quick_sort_y(points_y, 0, len(points_y)-1)
+# print(closest_points(points_x, 0, len(points_x)-1, points_y))
 
 # Below is std input according to asignment specification
 n = int(input())
-points = []
+points_x = []
 for i in range(n):
     points.append([int(element) for element in input().split()])
-quick_sort_x(points, 0, len(points)-1)
+points_y = [element for element in points_x]
+quick_sort_x(points_x, 0, len(points)-1, points_y)
 print(closest_points(points, 0, 11))
