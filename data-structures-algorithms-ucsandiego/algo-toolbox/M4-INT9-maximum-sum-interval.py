@@ -1,12 +1,12 @@
 """PROBLEM
-4.3.9 max-Sum Interval
-max-Sum Interval Problem
-Given an integer array, find its subarray with max sum.
+4.3.9 Maximum-Sum Interval
+Maximum-Sum Interval Problem
+Given an integer array, find its subarray with maximum sum.
 Input: An integer array (a0,...,an−1).
-Output: The max value of Sum(i=l -> r) ai = al + al+1 + ··· + ar among all intervals 0 ≤ l ≤ r ≤ n − 1.
+Output: The maximum value of Sum(i=l -> r) ai = al + al+1 + ··· + ar among all intervals 0 ≤ l ≤ r ≤ n − 1.
 """
 """SOLUTION
-The solution for this is to calculate the max sum of elements ending at each element, from left to right.
+The solution for this is to calculate the maximum sum of elements ending at each element, from left to right.
 The one which has the biggest, wins.
 """
 def max_sum(arr):
