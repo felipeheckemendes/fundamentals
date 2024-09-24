@@ -39,15 +39,14 @@ def output_alignement(matrix, i, j, alignement, word1, word2):
         alignement[0].append(word1[i-1])
         alignement[1].append(word2[j-1])
 
-word1 = 'editing'
-word2 = 'distance'
+word1 = input()
+word2 = input()
 matrix = edit_distance_matrix(word1, word2)
-for row in matrix:
-    print(row)
+print(matrix[len(matrix)-1][len(matrix[0])-1])
+# for row in matrix:
+#     print(row)
 
-length = len(matrix[0]) - 1 + matrix[len(matrix)-1][len(matrix[0])-1]
-alignement = [[], []]
-
-output_alignement(matrix, len(matrix)-1, len(matrix[0])-1, alignement, word1, word2)
-for row in alignement:
-    print(''.join(row))
+# alignement = [[], []]
+# output_alignement(matrix, len(matrix)-1, len(matrix[0])-1, alignement, word1, word2)
+# for row in alignement:
+#     print(''.join(row))
