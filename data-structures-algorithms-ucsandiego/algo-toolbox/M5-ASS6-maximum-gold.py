@@ -17,7 +17,7 @@ def maximum_gold(target_capacity, gold_bars):
         for i in range(1, len(matrix)):
             matrix[i][j] = max(
                 matrix[i-1][j],
-                matrix[i-1][j-gold_bars[i-1]] + gold_bars[i-1] if matrix[i][j-gold_bars[i-1]] + gold_bars[i-1] <= j else float('-inf')
+                matrix[i-1][j-gold_bars[i-1]] + gold_bars[i-1] if matrix[i][j-gold_bars[i-1]] + gold_bars[i-1] <= j else float('-inf') # This represents the maximum value achievable using the previous gold bars while subtracting the weight of the current gold bar from the capacity (That is, the maximum achievable using previous gold bars on the previous sub-problem).
             )
     return matrix
 
