@@ -92,6 +92,7 @@ class LinkedList:
         return string
 
 
+# Testing
 mylist = LinkedList()
 mylist.push_front(1)
 mylist.push_front(2)
@@ -112,14 +113,11 @@ print("Find key 9:", mylist.find_key(9))
 mylist.erase_key(2)
 print("Erase key 2:", mylist)
 print(mylist.is_empty())
-
 mylist.pop_back()
 mylist.pop_back()
 print(mylist)
 mylist.erase_key(4)
 print("Pop back all:", mylist)
-
-
 mylist.push_back(1)
 mylist.push_back(2)
 print("List initialized: ",mylist)
