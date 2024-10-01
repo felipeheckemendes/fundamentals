@@ -27,6 +27,8 @@ class LinkedList:
         if self.head == None:
             print("Error, empty list")
             return
+        if self.tail == self.head:
+            self.tail == None
         self.head = self.head.next
     
     def push_back(self, value):

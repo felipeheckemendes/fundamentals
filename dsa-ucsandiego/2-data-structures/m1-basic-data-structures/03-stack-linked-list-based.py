@@ -27,6 +27,8 @@ class Stack:
         if self.head == None:
             print("Error, empty stack")
             return
+        if self.head == self.tail:
+            self.tail = None
         popped = self.head
         self.head = self.head.next
         return popped.value
