@@ -16,12 +16,14 @@ class HashTable:
         self.number_of_keys = 0
         self.prime = 10000019 #Prime number needs to be bigger than the the largests phone number to be hashed. In our case, since telephone numbers have 7 digitis, it needs to be bigger than 9.999.999
         self.x = random.randint(1, self.prime-1)
-
+        self.a = random.randint(1, self.prime-1)
+        self.b = random.randint(1, self.prime-1)
 
     def hash(self, key):
         hashed_value = 0
         for letter in reversed(key):
-            hashed_value = ((hashed_value*self.x + ord(letter))%self.prime)%self.size
+            hashed_value = hashed_value*self.x + ord(letter)
+        hashed_value = ((hashed_value*self.a+self.b)%self.prime)%self.size
         return hashed_value
     
     def rehash(self):
@@ -54,7 +56,6 @@ class HashTable:
     
     def set_object(self, key, value):
         self.rehash()
-        print(self.hash(key))
         chain = self.chains[self.hash(key)]
         for element in chain:
             if element.key == key:
