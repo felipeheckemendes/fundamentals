@@ -18,17 +18,9 @@ Time Limits. C: 1 sec, C++: 1 sec, Java: 2 sec, Python: 10 sec. C#: 1.5 sec, Has
 """
 import random
 
-prime = 10000019 #Prime number needs to be bigger than the the largests phone number to be hashed. In our case, since telephone numbers have 7 digitis, it needs to be bigger than 9.999.999
 x = random.randint(1, 10**9)
 m1 = 10**9 + 7
 m2 = 10**9 + 9
-
-def hash(key):
-    hashed_value = 0
-    for letter in key:
-        hashed_value = hashed_value*x + ord(letter)
-        hashed_value = (hashed_value)%prime
-    return hashed_value
 
 def precompute_hashes(string, m):
     hashes = [0]
