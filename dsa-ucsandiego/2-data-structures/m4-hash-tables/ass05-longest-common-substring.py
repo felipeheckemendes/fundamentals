@@ -43,32 +43,30 @@ def sub_hash(precomputed_hashes, m, start_index, length):
     return sub_hash
 
 def longest_common_substring(string1, string2):
-    hash_set_m1 = {}
-    hash_set_m2 = {}
-    
-    precomputed_s1_m1 = precompute_hashes(string1, m1)
-    precomputed_s1_m2 = precompute_hashes(string1, m2)
-    precomputed_s2_m1 = precompute_hashes(string2, m1)
-    precomputed_s2_m2 = precompute_hashes(string2, m2)
+    precomputed_string1_m1 = precompute_hashes(string1, m1)
+    precomputed_string1_m2 = precompute_hashes(string1, m2)
+    precomputed_string2_m1 = precompute_hashes(string2, m1)
+    precomputed_string2_m2 = precompute_hashes(string2, m2)
     longest_common_substring = [-1, -1, 0]
-
+    hash_set_m1 = {}
+    hash_set_m2 = {}  
     left = 0
     right = min(len(string1), len(string2))
+    
     while left<=right:
         length = left + (right-left)//2
         for index in range(0, len(string1)-length+1):
-            hash_set_m1[sub_hash(precomputed_s1_m1, m1, index, length)] = index
-            hash_set_m2[sub_hash(precomputed_s1_m2, m2, index, length)] = index
+            hash_set_m1[sub_hash(precomputed_string1_m1, m1, index, length)] = index
+            hash_set_m2[sub_hash(precomputed_string1_m2, m2, index, length)] = index
         for index in range(0, len(string2)-length+1):
-            if sub_hash(precomputed_s2_m1, m1, index, length) in hash_set_m1 and sub_hash(precomputed_s2_m2, m2, index, length) in hash_set_m2:
-                longest_common_substring = [hash_set_m1[sub_hash(precomputed_s2_m1, m1, index, length)], index, length]
+            if sub_hash(precomputed_string2_m1, m1, index, length) in hash_set_m1 and sub_hash(precomputed_string2_m2, m2, index, length) in hash_set_m2:
+                longest_common_substring = [hash_set_m1[sub_hash(precomputed_string2_m1, m1, index, length)], index, length]
         if longest_common_substring[2] == length:
             left = length+1
         else:
             right = length-1
         hash_set_m1 = {}
         hash_set_m2 = {}
-    length = left + (right-left)//2
     return longest_common_substring
 
 string1, string2 = input().split()[:2]
