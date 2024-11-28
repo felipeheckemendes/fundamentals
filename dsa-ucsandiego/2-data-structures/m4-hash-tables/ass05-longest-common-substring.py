@@ -56,8 +56,6 @@ def longest_common_substring(string1, string2):
     right = min(len(string1), len(string2))
     while left<=right:
         length = left + (right-left)//2
-        # input()
-        print('START: left', left, ', right', right, ', length', length)
         for index in range(0, len(string1)-length+1):
             hash_set_m1[sub_hash(precomputed_s1_m1, m1, index, length)] = index
             hash_set_m2[sub_hash(precomputed_s1_m2, m2, index, length)] = index
