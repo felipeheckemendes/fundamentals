@@ -38,7 +38,6 @@ class Node:
         # Start the string representation from the root node.
         return str(self.key)
 
-    
 class BinarySearchTree:
     def __init__(self, root_key):
         self.root = Node(root_key)
@@ -92,6 +91,7 @@ class BinarySearchTree:
             if not x<= element.key <= y:
                 range_elements.remove(element)
         return range_elements
+
     def rotate_right(self, node):
         if node.left == None:
             print("Not possible to rotate right if node does not have left element")
@@ -117,6 +117,9 @@ class BinarySearchTree:
         if node_b != None:
             node_b.parent = node_x
         node_x.left = node_b
+
+        self.adjust_height(node)
+        self.adjust_height(node.parent)
 
     def rotate_left(self, node):
         if node.right == None:
@@ -144,16 +147,13 @@ class BinarySearchTree:
             node_b.parent = node_x
         node_x.right = node_b
 
+        self.adjust_height(node)
+        self.adjust_height(node.parent)
 
     def adjust_height(self, node):
-        # if node.key == 1:
-        #     print("We are adjusting height of node 1")
         left_height = 0 if node.left == None else node.left.height
         right_height = 0 if node.right == None else node.right.height
         node.height = 1 + max(left_height, right_height)
-        # if node.key == 1:
-        #     print(left_height, right_height)
-        #     print(node.height)
 
     def rebalance_right(self, node):
         if node.key == 5:
@@ -163,11 +163,7 @@ class BinarySearchTree:
         node_a_right_height = 0 if node_a.right == None else node_a.right.height
         if node_a_right_height > node_a_left_height:
             self.rotate_left(node_a)
-            self.adjust_height(node_a)
-            self.adjust_height(node_a.parent)
         self.rotate_right(node)
-        self.adjust_height(node)
-        self.adjust_height(node.parent)
 
     def rebalance_left(self, node):
         node_a = node.right
@@ -175,11 +171,7 @@ class BinarySearchTree:
         node_a_right_height = 0 if node_a.right == None else node_a.right.height
         if node_a_left_height > node_a_right_height:
             self.rotate_right(node_a)
-            self.adjust_height(node_a)
-            self.adjust_height(node_a.parent)
         self.rotate_left(node)
-        self.adjust_height(node)
-        self.adjust_height(node.parent)
 
     def rebalance(self, node):
         parent = node.parent
@@ -190,10 +182,10 @@ class BinarySearchTree:
         elif right_height > left_height + 1:
             self.rebalance_left(node)
         self.adjust_height(node)
-        if parent != node:
+        if parent != node: # If not the root yet, propage rebalance up
             self.rebalance(parent)
 
-    def insert(self, key):
+    def _insert(self, key):
         target = self.search_insert_position(key, self.root)
         new_node = Node(key)
         if target == None:
@@ -206,13 +198,13 @@ class BinarySearchTree:
             target.set_right(new_node)
         else:
             target.set_left(new_node)
-        print("Adding element", key)
-        print(self)
-        print("Rebalancing new node")
         self.rebalance(new_node)
-        print(self)
         return new_node
-    
+
+    def insert(self, key):
+        new_node = self._insert(key)
+        self.rebalance(new_node)
+        return new_node
 
     def remove_key(self, key):
         element_to_delete = self.search(key, self.root)
@@ -283,7 +275,6 @@ class BinarySearchTree:
         self.rebalance(parent)
         if next_element != None:
             self.rebalance(next_parent)
-            self.adjust_height(next_element)
 
     def __str__(self):
         # Start the string representation from the root node.
