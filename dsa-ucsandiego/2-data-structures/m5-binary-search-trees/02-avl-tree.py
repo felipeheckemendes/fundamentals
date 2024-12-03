@@ -103,18 +103,13 @@ class BinarySearchTree:
         node_b = node_y.right
 
         if parent.left == node:
-            parent.left = node_y
-            node_y.parent = parent
+            parent.set_left(node_y)
         elif parent.right == node:
-            parent.right= node_y
-            node_y.parent = parent
+            parent.set_right(node_y)
         elif parent == node:
-            node_y.parent = node_y
             self.root = node_y
-
-        node_x.parent = node_y
-        node_y.right = node_x
-
+            node_y.parent = node_y
+        node_y.set_right(node_x)
         if node_b != None:
             node_b.parent = node_x
         node_x.left = node_b
@@ -132,18 +127,13 @@ class BinarySearchTree:
         node_b = node_y.left
 
         if parent.left == node:
-            parent.left = node_y
-            node_y.parent = parent
+            parent.set_left(node_y)
         elif parent.right == node:
-            parent.right= node_y
-            node_y.parent = parent
+            parent.set_right(node_y)
         elif parent == node:
-            node_y.parent = node_y
             self.root = node_y
-
-        node_x.parent = node_y
-        node_y.left = node_x
-
+            node_y.parent = node_y
+        node_y.set_left(node_x)
         if node_b != None:
             node_b.parent = node_x
         node_x.right = node_b
@@ -157,8 +147,6 @@ class BinarySearchTree:
         node.height = 1 + max(left_height, right_height)
 
     def rebalance_right(self, node):
-        if node.key == 5:
-            print("Rebalancing right on node 5")
         node_a = node.left
         node_a_left_height = 0 if node_a.left == None else node_a.left.height
         node_a_right_height = 0 if node_a.right == None else node_a.right.height
@@ -175,8 +163,6 @@ class BinarySearchTree:
         self.rotate_left(node)
 
     def rebalance(self, node):
-        # print("Rebalance function...")
-        # print(self.root.right)
         parent = node.parent
         left_height = 0 if node.left == None else node.left.height
         right_height = 0 if node.right == None else node.right.height
@@ -414,7 +400,3 @@ print(tree3)
 tree4, tree5 = split_iterative(tree3, 10)
 print(tree4)
 print(tree5)
-
-# print(tree1)
-# tree1.delete(tree1.root)
-# print(tree1)

@@ -119,9 +119,7 @@ class BinarySearchTree:
         elif parent == node:
             self.root = node_y
             node_y.parent = node_y
-
         node_y.set_right(node_x)
-
         if node_b != None:
             node_b.parent = node_x
         node_x.left = node_b
@@ -146,9 +144,7 @@ class BinarySearchTree:
         elif parent == node:
             self.root = node_y
             node_y.parent = node_y
-
         node_y.set_left(node_x)
-
         if node_b != None:
             node_b.parent = node_x
         node_x.right = node_b
