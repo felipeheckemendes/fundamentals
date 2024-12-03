@@ -39,9 +39,10 @@ class Node:
         return str(self.key)
 
 class BinarySearchTree:
-    def __init__(self, root_key):
-        self.root = Node(root_key)
-        self.root.parent = self.root
+    def __init__(self, root):
+        self.root = root
+        if self.root:
+            self.root.parent = self.root
 
     def search(self, value, node):
         if node == None:
@@ -174,6 +175,8 @@ class BinarySearchTree:
         self.rotate_left(node)
 
     def rebalance(self, node):
+        # print("Rebalance function...")
+        # print(self.root.right)
         parent = node.parent
         left_height = 0 if node.left == None else node.left.height
         right_height = 0 if node.right == None else node.right.height
@@ -214,6 +217,8 @@ class BinarySearchTree:
             self.delete(element_to_delete)
 
     def delete(self, element_to_delete):
+        if element_to_delete == None:
+            return
         parent = element_to_delete.parent
         right = element_to_delete.right
         left = element_to_delete.left
@@ -235,6 +240,7 @@ class BinarySearchTree:
                 if element_to_delete == parent:
                     self.root = left
                     left.parent = left
+                    parent = self.root # TODO or mayve should be parent = next_element
             if right != None:
                 if element_to_delete == parent.left:
                     parent.set_left(right)
@@ -243,7 +249,7 @@ class BinarySearchTree:
                 if element_to_delete == parent:
                     self.root = right
                     right.parent = right
-                    parent = next_element
+                    parent = self.root # TODO or mayve should be parent = next_element
         else: # If there are 2 children (in this case, next element does NOT have a left child, but might have a right)
             next_element = element_to_delete.next()
             next_right = next_element.right
@@ -306,16 +312,109 @@ class BinarySearchTree:
         
         return result
 
+def merge_with_root(tree1, tree2, new_root_key):
+    tree1_height = 0 if tree1 == None or tree1.root == None else tree1.root.height
+    tree2_height = 0 if tree2 == None or tree2.root == None else tree2.root.height
+    new_tree = BinarySearchTree(Node(new_root_key))
+    new_tree.root.set_left(tree1.root)
+    new_tree.root.set_right(tree2.root)
+    new_tree.root.height = max(tree1_height, tree2_height) + 1
+    return new_tree
+
+def merge(tree1, tree2):
+    new_root_node = tree1.search(float('inf'), tree1.root)
+    tree1.delete(new_root_node)
+    new_tree = merge_with_root(tree1, tree2, new_root_node.key)
+    return new_tree
+
+def merge_with_root_avl(tree1, tree2, new_root_key):
+    tree1_height = 0 if tree1 == None or tree1.root == None else tree1.root.height
+    tree2_height = 0 if tree2 == None or tree2.root == None else tree2.root.height
+    if abs(tree1_height - tree2_height) <= 1:
+        new_tree = merge_with_root(tree1, tree2, new_root_key)
+        return new_tree
+    elif tree1_height > tree2_height:
+        r_prime = merge_with_root_avl(BinarySearchTree(tree1.root.right), tree2, new_root_key)
+        tree1.root.set_right(r_prime.root)
+        tree1.rebalance(tree1.root)
+        return tree1
+    elif tree1_height < tree2_height:
+        r_prime = merge_with_root_avl(BinarySearchTree(tree2.root.left), tree1, new_root_key)
+        tree2.root.set_left(r_prime.root)
+        tree2.rebalance(tree2.root)
+        return tree2
+    
+def merge_avl(tree1, tree2):
+    if tree1 == None or tree1.root == None:
+        return tree2
+    if tree2 == None or tree2.root == None:
+        return tree1
+    new_root_node = tree1.search(float('inf'), tree1.root)
+    tree1.delete(new_root_node)
+    new_tree = merge_with_root_avl(tree1, tree2, new_root_node.key)
+    return new_tree
+
+def split(tree, value):
+    if tree == None:
+        return (None, None)
+    if value < tree.root.key:
+        tree1, tree2 = split(BinarySearchTree(tree.root.left), value)
+        tree3 = merge_with_root_avl(tree2, BinarySearchTree(tree.root.right), tree.root.key)
+        return (tree1, tree3)
+    elif value > tree.root.key:
+        tree1, tree2 = split(BinarySearchTree(tree.root.right), value)
+        tree3 = merge_with_root_avl(BinarySearchTree(tree.root.left), tree2, tree.root.key)
+        return (tree1, tree3)
+    elif value == tree.root.key:
+        tree_smaller = BinarySearchTree(tree.root.left)
+        tree.root.set_left(None)
+        return (tree_smaller, tree)
+
+def split_iterative(tree, value):
+    current = tree.root
+    smaller_tree = BinarySearchTree(None)
+    bigger_tree = BinarySearchTree(None)
+    while current.left != None or current.right != None:
+        if value > current.key:
+            new_tree = BinarySearchTree(current.right)
+            current.right = None
+            smaller_tree = merge_avl(smaller_tree, BinarySearchTree(current))
+            current = new_tree.root
+            if current.right == None:
+                current.root = Node(value)
+        elif value < current.key:
+            new_tree = BinarySearchTree(current.left)
+            current.left = None
+            bigger_tree = merge_avl(BinarySearchTree(current), bigger_tree)
+            current = new_tree.root
+            if current.left == None:
+                current.root = Node(value)
+        elif value == current.key:
+            smaller_tree = merge_avl(smaller_tree, BinarySearchTree(current.left))
+            bigger_tree = merge_avl(BinarySearchTree(current.right), bigger_tree)
+            current.set_left(None)
+            current.set_right(None)
+    return (smaller_tree, bigger_tree)
 #Tree 1
-tree = BinarySearchTree(5)
-inserted = tree.insert(0)
-inserted = tree.insert(1)
-inserted = tree.insert(2)
-inserted = tree.insert(3)
-inserted = tree.insert(4)
-inserted = tree.insert(6)
-print(tree)
-inserted = tree.insert(6)
-inserted = tree.insert(6)
-inserted = tree.insert(6)
-print(tree)
+tree1 = BinarySearchTree(Node(1))
+inserted = tree1.insert(2)
+inserted = tree1.insert(3)
+inserted = tree1.insert(4)
+inserted = tree1.insert(5)
+tree2 = BinarySearchTree(Node(10))
+inserted = tree2.insert(20)
+inserted = tree2.insert(30)
+inserted = tree2.insert(40)
+inserted = tree2.insert(50)
+
+print(tree1)
+print(tree2)
+tree3 = merge_avl(tree1, tree2)
+print(tree3)
+tree4, tree5 = split_iterative(tree3, 10)
+print(tree4)
+print(tree5)
+
+# print(tree1)
+# tree1.delete(tree1.root)
+# print(tree1)
