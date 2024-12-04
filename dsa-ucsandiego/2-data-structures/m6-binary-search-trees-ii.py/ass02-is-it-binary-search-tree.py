@@ -507,26 +507,33 @@ def split_iterative(tree, value):
             current.set_right(None)
     return (smaller_tree, bigger_tree)
 
-n = int(input())
-nodes = []
-lefts = []
-rights = []
-for _ in range(n):
-    key, left, right = map(int, input().split()[:3])
-    node = Node(key)
-    nodes.append(node)
-    lefts.append(left)
-    rights.append(right)
+def main():
+    n = int(input())
+    nodes = []
+    lefts = []
+    rights = []
+    for _ in range(n):
+        key, left, right = map(int, input().split()[:3])
+        node = Node(key)
+        nodes.append(node)
+        lefts.append(left)
+        rights.append(right)
 
-tree = BinarySearchTree(nodes[0])
-nodes[0].parent = nodes[0]
-for index in range(len(nodes)):
-    if lefts[index] > -1:
-        nodes[index].set_left(nodes[lefts[index]])
-    if rights[index] > -1:
-        nodes[index].set_right(nodes[rights[index]])
+    if len(nodes) == 0:
+        print("CORRECT")
+        return
+        
+    tree = BinarySearchTree(nodes[0])
+    nodes[0].parent = nodes[0]
+    for index in range(len(nodes)):
+        if lefts[index] > -1:
+            nodes[index].set_left(nodes[lefts[index]])
+        if rights[index] > -1:
+            nodes[index].set_right(nodes[rights[index]])
 
-if tree.is_binary_search_tree()[2] == True:
-    print("CORRECT")
-else:
-    print("INCORRECT")
+    if tree.is_binary_search_tree()[2] == True:
+        print("CORRECT")
+    else:
+        print("INCORRECT")
+
+main()
